@@ -1,17 +1,16 @@
-import Bin from "@/components/ui/icons/bin";
-import Browse from "@/components/ui/icons/browse";
+import { Icons } from "@/components/ui/icons";
 import { NavItem } from "@/types/nav";
 
 const sideNav: NavItem[] = [
   {
     name: "Browse",
     href: "/browse",
-    icon: Browse,
+    icon: Icons.browse,
   },
   {
     name: "Recently deleted",
     href: "/bin",
-    icon: Bin,
+    icon: Icons.bin,
   },
 ];
 

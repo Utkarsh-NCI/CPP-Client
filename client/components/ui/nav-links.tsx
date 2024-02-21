@@ -17,7 +17,7 @@ export default function NavLinks() {
               variant={pathname === link.href ? "secondary" : "ghost"}
               className="w-full justify-start"
             >
-              {<link.icon></link.icon>}
+              <link.icon />
               {link.name}
             </Button>
           </Link>

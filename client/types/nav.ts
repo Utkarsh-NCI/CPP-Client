@@ -3,5 +3,7 @@ export interface NavItem {
   href: string;
   disabled?: boolean;
   label?: string;
-  icon: any;
+  icon: React.FC;
 }
+
+export type IconProps = React.HTMLAttributes<SVGElement>;
