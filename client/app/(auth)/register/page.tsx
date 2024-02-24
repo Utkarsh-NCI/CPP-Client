@@ -57,7 +57,7 @@ export default function Page() {
         />
         <Button disabled={false} onClick={onSubmit} className="min-w-80">
           {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-          Sign In
+          Sign Up
         </Button>
         <Separator className="my-4 max-w-80" />
         <p className="px-8 text-center text-sm text-muted-foreground">

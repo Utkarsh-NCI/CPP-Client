@@ -9,20 +9,7 @@ import {
   ContextMenuSub,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-
-export interface ImageMeta {
-  name: string;
-  date: string;
-  src: string;
-}
-
-interface ImageCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  image: ImageMeta;
-  aspectRatio?: "portrait" | "square";
-  width?: number;
-  height?: number;
-  date: string;
-}
+import { ImageCardProps } from "@/types/imageCardType";
 
 export function ImageCard({
   image,

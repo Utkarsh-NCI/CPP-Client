@@ -1,4 +1,4 @@
-import { ImageCard, ImageMeta } from "@/components/ui/ImageCard/imagecard";
+import { ImageCard } from "@/components/ui/ImageCard/imagecard";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   Dialog,
@@ -7,6 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { imageColl } from "./data";
+import { ImageMeta } from "@/types/imageCardType";
 
 export default function Page() {
   return (
