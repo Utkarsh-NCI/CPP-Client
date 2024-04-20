@@ -3,11 +3,14 @@ import { Input } from "@/components/ui/input";
 import { ChangeEvent, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { log } from "console";
+import { useToast } from "@/components/ui/use-toast";
+import { Icons } from "@/components/ui/icons";
 
 export default function Page() {
   const [file, setFile] = useState<File | null>(null);
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { toast } = useToast();
   const onFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     let _file: File | null = null;
     if (event.target.files) {
@@ -17,16 +20,36 @@ export default function Page() {
     setShowAlert(false);
   };
 
-  // Divide file into small parts
   const uploadFile = () => {
     if (!file) {
       setShowAlert(true);
       return;
     }
-    console.log(file);
-    const { size, type, name } = file;
-    const chunkSize = 256 * 1024; // 256 KB chunks
-    const maxConcurrentRequest = 5;
+    const formData = new FormData();
+    formData.append("fileName", file.name);
+    formData.append("file", file);
+    setLoading(true);
+    fetch(
+      "https://na7o6fftce.execute-api.us-east-1.amazonaws.com/default/uploadFile",
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+      .then((res) => {
+        console.log(res);
+        toast({
+          description: "Image uploaded successfully",
+        });
+      })
+      .catch(() => {
+        toast({
+          description: "Image uploaded failed",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <div className="flex flex-1 h-full justify-center items-center">
@@ -49,7 +72,14 @@ export default function Page() {
         <p className="text-sm text-muted-foreground">or</p>
         <div className="flex space-x-4">
           <Input type="file" className="max-w-md " onChange={onFileChange} />
-          <Button onClick={uploadFile}>Upload</Button>
+          {loading ? (
+            <Button disabled>
+              <Icons.Reload className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button onClick={uploadFile}>Upload</Button>
+          )}
         </div>
 
         <div className={`flex w-3/4 ${showAlert ? "" : "invisible"}`}>

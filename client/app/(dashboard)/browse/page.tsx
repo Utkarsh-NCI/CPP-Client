@@ -6,15 +6,26 @@ import {
   DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { imageColl } from "./data";
 import { ImageMeta } from "@/types/imageCardType";
 
-export default function Page() {
+async function getData() {
+  const res = await fetch(
+    "https://egcy9u6mab.execute-api.us-east-1.amazonaws.com/default/fetchImages",
+    { cache: "no-store" }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
+export default async function Page() {
+  const data = await getData();
   return (
     <ScrollArea>
       <ScrollBar className="scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-sky-700 scrollbar-track-sky-300" />
       <div className="flex flex-wrap flex-row">
-        {imageColl.map((image: ImageMeta) => (
+        {data.map((image: ImageMeta) => (
           <Dialog key={image.src}>
             <DialogTrigger asChild>
               <ImageCard
