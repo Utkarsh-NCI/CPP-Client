@@ -21,6 +21,7 @@ async function getData() {
 
 export default async function Page() {
   const data = await getData();
+
   return (
     <ScrollArea>
       <ScrollBar className="scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-sky-700 scrollbar-track-sky-300" />

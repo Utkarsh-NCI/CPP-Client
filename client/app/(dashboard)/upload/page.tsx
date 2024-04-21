@@ -29,32 +29,43 @@ export default function Page() {
     const formData = new FormData();
     formData.append("fileName", file.name);
     formData.append("file", file);
-    console.log(file.slice(0, 100));
-    // setLoading(true);
+    setLoading(true);
     const size = 128 * 1024;
     _upload(
       file,
       size,
       3,
       "https://zw0s0hi573.execute-api.us-east-1.amazonaws.com/default/chunkque"
-    ).then((res) => {
-      if (res.statusCode === 200) {
-        console.log(res.chunks[0].part);
-        fetch(
-          "https://81bhgc9w6g.execute-api.us-east-1.amazonaws.com/assembleChunks",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              fileName: file.name,
-              numberOfChunks: res.length,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-      }
-    });
+    )
+      .then((res) => {
+        if (res.statusCode === 200) {
+          console.log(res.chunks[0].part);
+          fetch(
+            "https://81bhgc9w6g.execute-api.us-east-1.amazonaws.com/assembleChunks",
+            {
+              method: "POST",
+              body: JSON.stringify({
+                fileName: file.name,
+                numberOfChunks: res.length,
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+        }
+      })
+      .catch((e) => {
+        toast({
+          description: "File upload failed",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+        toast({
+          description: "File upload successful",
+        });
+      });
   };
   return (
     <div className="flex flex-1 h-full justify-center items-center">

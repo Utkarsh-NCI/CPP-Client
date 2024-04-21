@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 import { cn } from "@/lib/utils";
 import {
   ContextMenu,
@@ -11,6 +10,7 @@ import {
 } from "@/components/ui/context-menu";
 import { ImageCardProps } from "@/types/imageCardType";
 import { formatDate } from "@/utils";
+import ContextItem from "@/components/client/ContextItem";
 
 export function ImageCard({
   image,
@@ -42,8 +42,8 @@ export function ImageCard({
           <ContextMenuItem>Open</ContextMenuItem>
           <ContextMenuSub></ContextMenuSub>
           <ContextMenuSeparator />
-          <ContextMenuItem>Download</ContextMenuItem>
-          <ContextMenuItem>Rename</ContextMenuItem>
+          <ContextItem title="Download" image={image} isDownload={true} />
+          <ContextItem title="Delete" image={image} isDownload={false} />
           <ContextMenuItem>Info</ContextMenuItem>
           <ContextMenuSeparator />
           <ContextMenuItem>Share</ContextMenuItem>
