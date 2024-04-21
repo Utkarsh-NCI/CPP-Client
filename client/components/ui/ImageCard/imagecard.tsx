@@ -10,6 +10,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { ImageCardProps } from "@/types/imageCardType";
+import { formatDate } from "@/utils";
 
 export function ImageCard({
   image,
@@ -50,7 +51,9 @@ export function ImageCard({
       </ContextMenu>
       <div className="space-y-1 text-sm">
         <h3 className="font-medium leading-none">{image.name}</h3>
-        <p className="text-xs text-muted-foreground">{image.date}</p>
+        <p className="text-xs text-muted-foreground">
+          {formatDate(image.date)}
+        </p>
       </div>
     </div>
   );

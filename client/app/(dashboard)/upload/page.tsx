@@ -5,6 +5,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/ui/icons";
+import { uploadFile as _upload } from "x22229698-multi";
 
 export default function Page() {
   const [file, setFile] = useState<File | null>(null);
@@ -28,28 +29,32 @@ export default function Page() {
     const formData = new FormData();
     formData.append("fileName", file.name);
     formData.append("file", file);
-    setLoading(true);
-    fetch(
-      "https://na7o6fftce.execute-api.us-east-1.amazonaws.com/default/uploadFile",
-      {
-        method: "POST",
-        body: formData,
+    console.log(file.slice(0, 100));
+    // setLoading(true);
+    const size = 128 * 1024;
+    _upload(
+      file,
+      size,
+      3,
+      "https://zw0s0hi573.execute-api.us-east-1.amazonaws.com/default/chunkque"
+    ).then((res) => {
+      if (res.statusCode === 200) {
+        console.log(res.chunks[0].part);
+        fetch(
+          "https://81bhgc9w6g.execute-api.us-east-1.amazonaws.com/assembleChunks",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              fileName: file.name,
+              numberOfChunks: res.length,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
       }
-    )
-      .then((res) => {
-        console.log(res);
-        toast({
-          description: "Image uploaded successfully",
-        });
-      })
-      .catch(() => {
-        toast({
-          description: "Image uploaded failed",
-        });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    });
   };
   return (
     <div className="flex flex-1 h-full justify-center items-center">
