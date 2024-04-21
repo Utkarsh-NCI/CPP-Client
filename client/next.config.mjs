@@ -4,11 +4,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
+        hostname: "x22229698cpp.s3.amazonaws.com",
       },
       {
         protocol: "https",
-        hostname: "x22229698cpp.s3.amazonaws.com",
+        hostname: "d3o5s15a13yz2u.cloudfront.net",
       },
     ],
   },

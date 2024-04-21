@@ -21,13 +21,14 @@ export function ImageCard({
   date,
   ...props
 }: ImageCardProps) {
+  const cloudfront: string = "https://d3o5s15a13yz2u.cloudfront.net";
   return (
     <div className={cn("space-y-3", className)} {...props}>
       <ContextMenu>
         <ContextMenuTrigger>
           <div className="overflow-hidden rounded-md">
             <Image
-              src={image.src}
+              src={`${cloudfront}/${image.name}`}
               alt={image.name}
               width={width}
               height={height}
